@@ -14,7 +14,7 @@ I find this as one of the most striking analogies between artificial and natural
 
 So I have a messy reality of living and changing faces $$x$$, and I also have possibly have an inaccessible latent space of faces $$z$$. Something, say $$A$$ connects these two in "normal" conditions. Maybe a bit noise, a $$v$$ is added to the mix, which makes the whole situation to be expressible like so: 
 
-$$x = Az + v$$ where $$A \in \mathbb{R}^nxm$$
+$$x = Az + v$$ where $$A \in \mathbb{R}^{nxm}$$
 
 How can I get access to the hidden $$z$$, then? 
 
