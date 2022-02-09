@@ -7,4 +7,4 @@ Here is (probably) the most common representation of a continuous latent space:
 
 The interpolating figures give us hints about how the neural network learns the MNIST dataset. We see that a considerable portion of the space is reserved to round and loop-like figures (0 and 9). These figures "effortlessly" interpolate into numbers like 6 and 8. Perhaps one of the most interesting aspects is how 9, 8, 5, and 0 get squished into a row of 1s at the bottom.
 
-$$x \in {R}^n$$
+$$x \in \mathbb{R}^n$$
