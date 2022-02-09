@@ -1,4 +1,4 @@
-I have the curse of looking back and feeling like I haven't learned much at all. That's why I decided to keep a blog to break that curse.
+I have the curse of looking back and feeling like I haven't learned much at all. So I decided to write a blog in hopes of breaking that curse. 
 
 The topics will include machine learning, music, art, computer science, philosophy, sound, statistics, and math. Hope you'll find something interesting there.
 
