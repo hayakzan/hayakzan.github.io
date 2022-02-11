@@ -8,6 +8,4 @@ For data $$x$$ of $$n$$ elements,
 - if $$n$$ is odd, $$median(x) = x_{(n+1)/2}$$
 - if $$n$$ is odd, $$median(x) = \frac{x_{(n/2)} + x_{(n/2)+1}}{2} $$
   
-
-If we have an odd array, then the correct place for our cursor will be a position where leftSide.length = rightSide.length + 1
  
