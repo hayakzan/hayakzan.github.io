@@ -7,6 +7,6 @@ Let's quickly have a look at what median is in odd-numbered arrays (odd data) an
 For data $$x$$ of $$n$$ elements,
 - if $$n$$ is odd, $$median(x) = x_{(n+1)/2}$$
 
-- if $$n$$ is odd, $$median(x) = \frac{x_{(n/2)} + x_{(n/2)+1}}{2} $$
+- if $$n$$ is even, $$median(x) = \frac{x_{(n/2)} + x_{(n/2)+1}}{2} $$
   
  
