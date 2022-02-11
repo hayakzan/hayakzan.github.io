@@ -16,4 +16,3 @@ OK let's see. If we have `nums1 = [1,3]` and `nums2 = [2]`, how would we proceed
 [_1,3]
 [_2]
 ```
-moving the cursor to right simultaneously until
