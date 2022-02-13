@@ -1,4 +1,4 @@
-# Why squared $$L^2$$ norm over $$L^2$$ norm?
+# Why squared $$L^2$$ norm over $$L^2$$ norm? [under construction]
 
 In the Linear Algebra part of Goodfellow et al.'s brilliant [Deep Learning book](https://www.deeplearningbook.org/contents/linear_algebra.html) the following statement appears:
 
