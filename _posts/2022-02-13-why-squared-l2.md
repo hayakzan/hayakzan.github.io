@@ -6,6 +6,6 @@ In the Linear Algebra chapter of Goodfellow et al.'s brilliant [Deep Learning bo
 
 I wasn't quite sure about what is exactly referred here, so needed to dig in a bit. Hope this helps to some other learner looking for the same thing. 
 
-So.
+So... The summation
 
-$$L^2(x) = \(sum_{n=1}^{n} x_i^2)^frac{1}{2} \ $$
+$$L^2(x) = \sqrt{sum_{n=1}^{n} x_i^2}\ $$
