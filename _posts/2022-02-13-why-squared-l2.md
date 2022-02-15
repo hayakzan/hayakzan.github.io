@@ -8,4 +8,4 @@ I wasn't quite sure about what is exactly referred here, so needed to dig in a b
 
 So... The summation
 
-$$L^2(x) = sqrt{sum_{n=1}^{n} x_i^2} $$
+$$L^2(x) = \sqrt{\sum_{n=1}^{n} x_i^2}\\ $$
