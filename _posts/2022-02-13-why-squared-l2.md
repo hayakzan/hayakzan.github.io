@@ -10,5 +10,5 @@ The Euclidean norm, or $$L^2$$ norm can be expressed as follows:
 $$L^2(x) = (x_1^2+x_2^2+...+x_i^2+...+x_n^2)^\frac{1}{2}.$$
 
 The derivative of it indeed depends on the entire vector, like this:
-$$\frac{d}{dx_i}L^2(x) = \frac{1}{2}(x_1^2+x_2^2+...+x_i^2+...+x_n^2)^{\frac{1}{2}-1}\cdot2x_i \\
+$$\frac{d}{dx_i}L^2(x) = \frac{1}{2}(x_1^2+x_2^2+...+x_i^2+...+x_n^2)^{\frac{1}{2}-1}\cdot2x_i 
 = (x_1^2+x_2^2+...+x_i^2+...+x_n^2)^{-\frac{1}{2}}\cdotx_i.$$
