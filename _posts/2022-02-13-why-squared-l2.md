@@ -6,9 +6,9 @@ In the Linear Algebra chapter of Goodfellow et al.'s brilliant [Deep Learning bo
 
 I wasn't quite sure about what is exactly referred here, so needed to dig in a bit. Hope this helps to some other learner looking for the same thing. 
 
-The Euclidean norm, or $$L^2$$ norm is expressed as follows:
-$$L^2(x) = (x_1^2+x_2^2+...+x_i^2+...+x_n^2)^\frac{1}{2}$$
+The Euclidean norm, or $$L^2$$ norm can be expressed as follows:
+$$L^2(x) = (x_1^2+x_2^2+...+x_i^2+...+x_n^2)^\frac{1}{2}.$$
 
-The derivation of it depends on the entire vector, like this:
-
+The derivative of it depends on the entire vector, like this:
+$$\frac{d}{dx_i}L^2(x) = \frac{1}{2}(x_1^2+x_2^2+...+x_i^2+...+x_n^2)^\frac{1}{2}-1*2x_i.$$
 
