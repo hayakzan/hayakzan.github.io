@@ -22,6 +22,10 @@ the derivative conveniently depends on $$x_i^2$$, resulting in:
 
 <img width="568" alt="Screen Shot 2022-04-30 at 3 28 08 PM" src="https://user-images.githubusercontent.com/61164329/166124640-4cda227b-1f29-4d20-ac30-cb35b5c62212.png">
 
+__________________________
+
+
+
 
 <img width="722" alt="derivative" src="https://user-images.githubusercontent.com/61164329/166124823-05a2cd79-d155-4b44-835b-aa1f4100832e.png">
 
