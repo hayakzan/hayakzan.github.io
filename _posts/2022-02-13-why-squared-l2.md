@@ -13,3 +13,13 @@ The Euclidean norm, or $$L^2$$ norm can be expressed as follows:
 The derivative of it indeed depends on the entire vector, like this:
 
 <img width="874" alt="Screen Shot 2022-04-30 at 2 29 06 PM" src="https://user-images.githubusercontent.com/61164329/166123322-bced7431-1d1c-42c9-b812-3de1caab1507.png">
+
+Whereas for $$(L^2)^2$$,
+
+<img width="1209" alt="Screen Shot 2022-04-30 at 2 53 37 PM" src="https://user-images.githubusercontent.com/61164329/166123881-b0c6b4d3-e5de-4a85-bb46-bb5cadd0357a.png">
+
+the derivative conveniently depends on $$x_i^2$$, resulting in: 
+
+<img width="651" alt="Screen Shot 2022-04-30 at 2 58 22 PM" src="https://user-images.githubusercontent.com/61164329/166123986-732081e6-dab2-449d-af59-a24edb7961ef.png">
+
+
