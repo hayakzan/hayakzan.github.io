@@ -1,4 +1,4 @@
-# Why squared $$L^2$$ norm over $$L^2$$ norm? [under construction]
+# Why squared $$L^2$$ norm over $$L^2$$ norm?
 
 In the Linear Algebra chapter of Goodfellow et al.'s brilliant [Deep Learning book](https://www.deeplearningbook.org/contents/linear_algebra.html), the following statement appears:
 
@@ -22,7 +22,12 @@ the derivative conveniently depends on $$x_i^2$$, resulting in:
 
 <img width="568" alt="Screen Shot 2022-04-30 at 3 28 08 PM" src="https://user-images.githubusercontent.com/61164329/166124640-4cda227b-1f29-4d20-ac30-cb35b5c62212.png">
 
+
+
+
 __________________________
+
+
 
 
 
