@@ -12,7 +12,7 @@ The Euclidean norm, or $$L^2$$ norm can be expressed as follows:
 
 The derivative of it indeed depends on the entire vector, like this:
 
-<img width="874" alt="Screen Shot 2022-04-30 at 2 29 06 PM" src="https://user-images.githubusercontent.com/61164329/166123322-bced7431-1d1c-42c9-b812-3de1caab1507.png">
+<img width="1160" alt="Screen Shot 2022-04-30 at 8 22 46 PM" src="https://user-images.githubusercontent.com/61164329/166130854-fbbf8b9a-6f9d-4d7d-a28f-a201e38fbfda.png">
 
 Whereas for $$(L^2)^2$$,
 
@@ -24,13 +24,7 @@ the derivative conveniently depends on $$x_i^2$$, resulting in:
 
 
 
-
 __________________________
-
-
-
-
-
 
 <img width="722" alt="derivative" src="https://user-images.githubusercontent.com/61164329/166124823-05a2cd79-d155-4b44-835b-aa1f4100832e.png">
 
