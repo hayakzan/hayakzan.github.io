@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Yiğit Kolat</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content on Yiğit Kolat</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 10 Mar 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Spomenik I</title>
+      <link>http://localhost:1313/works/spomenik_i/</link>
+      <pubDate>Sun, 10 Mar 2019 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/works/spomenik_i/</guid>
+      <description>“A concept is a brick. It can be used to build the courthouse of reason. Or it can be thrown through the window.&amp;quot; —Brian Massumi, in Pleasures of Philosophy, a translator’s foreword to Deleuze &amp;amp; Guattari’s A Thousand Plateaus&#xA;Spomenik means “monument” in various Slavic languages, which is particularly used for the massive abstract sculptures erected in the Former Yugoslavia countries after WWII. The piece relates to its namesake by depending on a 3D graph, a spomenik, which represents a dataset of musical parameters that is used to train a generative AI process.</description>
+    </item>
+    <item>
+      <title>About</title>
+      <link>http://localhost:1313/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/about/</guid>
+      <description>&amp;lt; &amp;gt; &amp;lt; &amp;gt; &amp;lt;img src=&amp;quot;OBLIGATORY_PHOTO_OF_YIGIT_HOLDING_HIS_MANUSCRIPTS_AND_A_PEN_WITH_A_VERY_SERIOUS_EXPRESSION.jpg&amp;quot;&amp;gt; &amp;lt; &amp;gt; &amp;lt; &amp;gt; I set up unusual conditions and environments to musically collaborate with people and machines. Recent output tackles with methods, aesthetics, and ethics of artificial neural networks as well as with resonant metals.&#xA;I teach composition and theory at the University of Washington, School of Music. Please see https://music.washington.edu/people/yigit-kolat for an old photo and a formal bio.</description>
+    </item>
+    <item>
+      <title>Contact</title>
+      <link>http://localhost:1313/contact/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/contact/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Research</title>
+      <link>http://localhost:1313/research/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/research/</guid>
+      <description>Notes on a few topics of academic interest will be shared here.</description>
+    </item>
+    <item>
+      <title>Works</title>
+      <link>http://localhost:1313/works/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/works/</guid>
+      <description> Spomenik I Oasis of Now Inference Engines Tierra Arrasada DARN. Quia Ergo Femina Halki / Heybeliada Messenger of Sorrows [difeʁɑ̃s] K&#39;iin poppyfield Piano Concerto Exlibris Tülbend Yoshin Echoes of Tinder Der Untergeher </description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AI on Yiğit Kolat</title>
+    <link>http://localhost:1313/tags/ai/</link>
+    <description>Recent content in AI on Yiğit Kolat</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 10 Mar 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Spomenik I</title>
+      <link>http://localhost:1313/works/spomenik_i/</link>
+      <pubDate>Sun, 10 Mar 2019 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/works/spomenik_i/</guid>
+      <description>“A concept is a brick. It can be used to build the courthouse of reason. Or it can be thrown through the window.&amp;quot; —Brian Massumi, in Pleasures of Philosophy, a translator’s foreword to Deleuze &amp;amp; Guattari’s A Thousand Plateaus&#xA;Spomenik means “monument” in various Slavic languages, which is particularly used for the massive abstract sculptures erected in the Former Yugoslavia countries after WWII. The piece relates to its namesake by depending on a 3D graph, a spomenik, which represents a dataset of musical parameters that is used to train a generative AI process.</description>
+    </item>
+  </channel>
+</rss>
