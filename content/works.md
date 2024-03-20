@@ -32,6 +32,11 @@ author = ""
     <tr style="height: 40px;"></tr> <!-- Spacer row -->
     <tr>
         <td>
+            <div class="overlay-text">Shōbute.</div>
+            <a href="/works/shobute/"><img src="shobute.png" alt="shobute" width="300" height="300"></a>
+        </td>
+        <td width="20"></td> <!-- Spacer cell -->
+        <td>
             <div class="overlay-text">DARN.</div>
             <a href="/works/DARN/"><img src="DARN.png" alt="DARN" width="300" height="300"></a>
         </td>
@@ -45,14 +50,14 @@ author = ""
             <div class="overlay-text">Halki / Heybeliada</div>
             <a href="/works/halki_heybeliada/"><img src="halki.png" alt="halki_heybeliada" width="300" height="300"></a>
         </td>    
-        <td width="20"></td> <!-- Spacer cell -->
+    </tr>
+    <tr style="height: 40px;"></tr> <!-- Spacer row -->
+    <tr>    
         <td>
             <div class="overlay-text">Messenger of Sorrows</div>
             <a href="/works/messenger_of_sorrows/"><img src="messenger.png" alt="messenger_of_sorrows" width="300" height="300"></a>
         </td>
-    </tr>
-    <tr style="height: 40px;"></tr> <!-- Spacer row -->
-    <tr>    
+        <td width="20"></td> <!-- Spacer cell -->
         <td>
             <div class="overlay-text">[difeʁɑ̃s]</div>
             <a href="/works/diferas/"><img src="diferas.png" alt="diferas" width="300" height="300"></a>
@@ -67,14 +72,14 @@ author = ""
             <div class="overlay-text">poppyfield</div>
             <a href="/works/gelincik_tarlasi/"><img src="gelincik.png" alt="gelincik" width="300" height="300"></a>
         </td>
-        <td width="20"></td> <!-- Spacer cell -->
+    </tr>
+    <tr style="height: 40px;"></tr> <!-- Spacer row -->
+    <tr>
         <td>
             <div class="overlay-text">Piano Concerto</div>
             <a href="/works/piano_concerto/"><img src="concerto.png" alt="piano_concerto" width="300" height="300"></a>
         </td>    
-    </tr>
-    <tr style="height: 40px;"></tr> <!-- Spacer row -->
-    <tr>
+        <td width="20"></td> <!-- Spacer cell -->
         <td>
             <div class="overlay-text">Exlibris</div>
             <a href="/works/exlibris/"><img src="exlibris.png" alt="exlibris" width="300" height="300"></a>
@@ -89,14 +94,14 @@ author = ""
             <div class="overlay-text">Yoshin</div>
             <a href="/works/yoshin/"><img src="yoshin.png" alt="K'iin" width="300" height="300"></a>
         </td>
-        <td width="20"></td> <!-- Spacer cell -->
+    </tr>
+    <tr style="height: 40px;"></tr> <!-- Spacer row -->
+    <tr>
         <td>
             <div class="overlay-text">Echoes of Tinder</div>
             <a href="/works/kav_yankilari/"><img src="kav.png" alt="kav" width="300" height="300"></a>
         </td>
-    </tr>
-    <tr style="height: 40px;"></tr> <!-- Spacer row -->
-    <tr>
+        <td width="20"></td> <!-- Spacer cell -->
         <td>
             <div class="overlay-text">Der Untergeher</div>
             <a href="/works/der_untergeher/"><img src="untergeher.png" alt="untergeher" width="300" height="300"></a>
