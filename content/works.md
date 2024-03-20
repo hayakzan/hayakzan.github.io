@@ -32,7 +32,7 @@ author = ""
     <tr style="height: 40px;"></tr> <!-- Spacer row -->
     <tr>
         <td>
-            <div class="overlay-text">Shōbute.</div>
+            <div class="overlay-text">Shōbute</div>
             <a href="/works/shobute/"><img src="shobute.png" alt="shobute" width="300" height="300"></a>
         </td>
         <td width="20"></td> <!-- Spacer cell -->
