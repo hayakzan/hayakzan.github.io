@@ -7,8 +7,9 @@ tags = [
 ]
 +++
 
-Luke Fitzpatrick, violin<br>
-Ibidunni Ojikutu, spoken voice<br>
+Luke Fitzpatrick, violin    
+Ibidunni Ojikutu, spoken voice    
+
 
 DARN. exhibits a counterpoint of evolving structures. Perhaps the most prominent of these structures is the spoken part that contains a number of reactions to Kendrick Lamar’s 2018 Pulitzer Prize in Music achievement, collected from various online sources. The reactions are integrated into the piece in a particular order, ranging from seemingly naïve questions about what qualifies Lamar’s album DAMN. for the award, to bursts of blatant racism.
 

@@ -7,9 +7,10 @@ tags = [
 ]
 +++
 
-Naeim Rahmani, classical guitar
-Jeff Bowen, electric guitar
-Abbey Blackwell, double bass
+Naeim Rahmani, classical guitar        
+Jeff Bowen, electric guitar    
+Abbey Blackwell, double bass    
+
 
 This piece can be considered in two distinct ways:
 

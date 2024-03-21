@@ -7,10 +7,11 @@ tags = [
 ]
 +++
 
-Rachel Reyes, flute<br>
-Justin Zeitlinger, violin<br> 
-Cole Henslee, tuba<br> 
-Melissa Wang, vibraphone<br>
+Rachel Reyes, flute    
+Justin Zeitlinger, violin    
+Cole Henslee, tuba    
+Melissa Wang, vibraphone    
+
 
 “A concept is a brick. It can be used to build the courthouse of reason. Or it can be thrown through the window." —Brian Massumi, in Pleasures of Philosophy, a translator’s foreword to Deleuze & Guattari’s A Thousand Plateaus
 
