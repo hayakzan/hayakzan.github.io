@@ -7,8 +7,6 @@ tags = [
 ]
 +++
 
---Does this work exploit late historical trauma?--
-
 for soprano, bass flute, violin, electric guitar and live electronics
 
 The Inverted Space Ensemble     
@@ -36,6 +34,6 @@ Aynur, "Dar Hejîrokê," in Keçe Kurdan, Kalan Müzik, 2002, geni.us/kecekurdan
 © 2002 Kalan Ses Görüntü Film Yapım San. ve Tic. Ltd. Şti.
 www.aynurdogan.net
 www.kalan.com
-
+     
 {{< youtube qNgQm1qJ-IA >}}
 {{< soundcloud-track 266230247 >}}
