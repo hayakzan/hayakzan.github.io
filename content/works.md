@@ -38,7 +38,7 @@ author = ""
         <td width="20"></td> <!-- Spacer cell -->
         <td>
             <div class="overlay-text">DARN.</div>
-            <a href="/works/DARN/"><img src="DARN.png" alt="DARN" width="300" height="300"></a>
+            <a href="/works/darn/"><img src="DARN.png" alt="DARN" width="300" height="300"></a>
         </td>
         <td width="20"></td> <!-- Spacer cell -->
         <td>
