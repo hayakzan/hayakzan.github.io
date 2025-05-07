@@ -1,7 +1,6 @@
 +++
 author = "Yiğit Kolat"
 title = "Research"
-<!--description = "UNDER CONSTRUCTION" -->
 +++
 
 <table cellspacing="0" cellpadding="0">
