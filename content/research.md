@@ -1,6 +1,8 @@
 +++
-author = "Yiğit Kolat"
 title = "Research"
+description = "Click on the work for details. Hint: you can actually scroll down, the loading is merely an effect."
+aliases = ["about-us","about-hugo","contact"]
+author = ""
 +++
 
 <table cellspacing="0" cellpadding="0">
