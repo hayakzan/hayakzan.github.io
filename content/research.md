@@ -1,7 +1,6 @@
 +++
 author = "Yiğit Kolat"
 title = "Research"
-date = ""
 <!--description = "UNDER CONSTRUCTION" -->
 +++
 
