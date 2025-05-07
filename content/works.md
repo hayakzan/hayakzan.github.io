@@ -1,7 +1,6 @@
 +++
 title = "Works"
 description = "Click on the work for details. Hint: you can actually scroll down, the loading is merely an effect."
-date = " "
 aliases = ["about-us","about-hugo","contact"]
 author = ""
 +++
