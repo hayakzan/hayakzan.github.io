@@ -20,6 +20,7 @@ author = ""
         <td width="20"></td> <!-- Spacer cell -->        
     </tr>
     <tr style="height: 40px;"></tr> <!-- Spacer row -->
+</table>
 
 
 
