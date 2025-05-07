@@ -30,7 +30,7 @@ preserveTaxonomyNames = false
     facebook = ""
     twitter = ""
     linkedin = ""
-    github = ""
+    github = "https://www.youtube.com/channel/UCGrkqx-0aSupn8eHfroxthg"
     gitlab = "https://soundcloud.com/ykolat"
     
     # Enables or disables the loading animations. false activates them. Default is false.
@@ -82,7 +82,7 @@ preserveTaxonomyNames = false
 
 [taxonomies]
 category = "categories"
-tag = "tags"
+tag = ""
 
 [markup.goldmark.renderer]
 unsafe= true

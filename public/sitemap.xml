@@ -47,8 +47,6 @@
   </url><url>
     <loc>http://localhost:1313/research/spomenik-res/</loc>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
-  </url><url>
     <loc>http://localhost:1313/works/</loc>
   </url>
 </urlset>
