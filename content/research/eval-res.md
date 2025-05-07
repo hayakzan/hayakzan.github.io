@@ -1,14 +1,16 @@
 +++
 author = "Yiğit Kolat"
-title = "Spomenik I: Project Description"
-description = "technical / conceptual details on Spomenik I"
+title = "EVAL: Project Description"
+description = "technical / conceptual details on EVAL"
 +++
 
 <iframe
-  src="https://aimc2024.pubpub.org/pub/o0ltua9f/release/1"
+  src="/eval.pdf"
   width="100%"
-  height="600"
+  height="800"
   style="border: none;"
   loading="lazy">
+  This browser does not display PDFs natively.
+  <a href="/files/my-score.pdf">Download instead.</a>
 </iframe>
 

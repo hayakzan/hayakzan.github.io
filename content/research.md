@@ -13,7 +13,7 @@ title = "Research"
         <td width="20"></td> <!-- Spacer cell -->
         <td>
             <div class="overlay-text">EVAL</div>
-            <a href="/research/eval-res/"><img src="eval.jpeg" alt="eval" width="300" height="300"></a>
+            <a href="/research/eval-res/"><img src="eval.png" alt="eval" width="300" height="300"></a>
         </td>
         <td width="20"></td> <!-- Spacer cell -->        
     </tr>
