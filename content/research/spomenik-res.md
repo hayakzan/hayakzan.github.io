@@ -1,9 +1,7 @@
 +++
 author = "Yiğit Kolat"
-title = "Spomenik I"
-description = "for flute, violin, vibraphone, tuba, resonant metal, and fixed media"
-tags = [
-]
+title = "Spomenik I: Project Description"
+description = "technical / conceptual details on Spomenik I"
 +++
 
 <iframe
