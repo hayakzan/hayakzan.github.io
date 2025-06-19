@@ -9,6 +9,11 @@ author = ""
     <tr style="height: 40px;"></tr> <!-- Spacer row -->
     <tr>
         <td>
+            <div class="overlay-text">La quatrième mélodie</div>
+            <a href="/works/la_quatrieme_melodie/"><img src="la_quatrieme_melodie.png" alt="la_quatrieme_melodie" width="300" height="300"></a>
+        </td>
+        <td width="20"></td> <!-- Spacer cell -->    
+        <td>
             <div class="overlay-text">Spomenik I</div>
             <a href="/works/spomenik_i/"><img src="spomenik.png" alt="spomenik" width="300" height="300"></a>
         </td>
