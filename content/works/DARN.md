@@ -5,7 +5,7 @@ date = "2019-03-10"
 description = "for solo violin, pre-recorded spoken voice, and live electronics"
 tags = [
 ]
-+++   
++++
 
 Luke Fitzpatrick, violin    
 Ibidunni Ojikutu, spoken voice    

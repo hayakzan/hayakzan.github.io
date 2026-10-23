@@ -3,7 +3,10 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2019-03-10T00:00:00+00:00</lastmod>
+    <lastmod>2025-06-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/works/la_quatrieme_melodie/</loc>
+    <lastmod>2025-06-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/works/diferas/</loc>
     <lastmod>2019-03-10T00:00:00+00:00</lastmod>
@@ -46,6 +49,8 @@
     <loc>http://localhost:1313/research/</loc>
   </url><url>
     <loc>http://localhost:1313/research/spomenik-res/</loc>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
   </url><url>
     <loc>http://localhost:1313/works/</loc>
   </url>

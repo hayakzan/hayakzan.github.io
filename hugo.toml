@@ -37,7 +37,7 @@ preserveTaxonomyNames = false
     loadfastload = false
 
     # Sets the speed for the page loading effect. Default is 1.0.
-    loadspeedfactor = 0.3
+    loadspeedfactor = 1.0
 
     # Enables or disables the second flyby cursor. Default is false.
     loadonepass = false
@@ -82,7 +82,7 @@ preserveTaxonomyNames = false
 
 [taxonomies]
 category = "categories"
-tag = ""
+tag = "tags"
 
 [markup.goldmark.renderer]
 unsafe= true
