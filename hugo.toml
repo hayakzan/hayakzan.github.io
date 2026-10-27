@@ -75,10 +75,16 @@ preserveTaxonomyNames = false
     weight = 30
 
   [[menu.main]]
+    identifier = "blog"
+    name = "Blog"
+    url = "/blog/" 
+    weight = 40
+
+  [[menu.main]]
     identifier = "contact"
     name = "Contact"
     url = "/contact/"       # The path can lead to a content folder too.
-    weight = 40
+    weight = 50
 
 [taxonomies]
 category = "categories"
