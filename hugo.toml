@@ -90,8 +90,14 @@ preserveTaxonomyNames = false
 category = "categories"
 tag = "tags"
 
+[markup.goldmark.extensions.passthrough]
+enable = true
+[markup.goldmark.extensions.passthrough.delimiters]
+block = [['\[', '\]'], ['$$', '$$']]
+inline = [['\(', '\)'], ['$', '$']]
+
 [markup.goldmark.renderer]
-unsafe= true
+unsafe = true   # also needed for the <details> answer boxes
 
 [privacy]
 

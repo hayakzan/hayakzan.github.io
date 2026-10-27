@@ -6,8 +6,15 @@
     <description>Recent content in Blogs on Yiğit Kolat</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 25 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 26 Oct 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Antiderivative Antialiasing (1)</title>
+      <link>http://localhost:1313/blog/adaa/</link>
+      <pubDate>Mon, 26 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/adaa/</guid>
+      <description>&lt;br&gt;&#xA;&lt;h2 id=&#34;the-problem-distortion-creates-partials-above-nyquist&#34;&gt;The problem: distortion creates partials above Nyquist&lt;/h2&gt;&#xA;&lt;br&gt;&#xA;&lt;p&gt;A &lt;strong&gt;waveshaper&lt;/strong&gt; is the simplest nonlinear effect there is. Take each sample and push it through a function:&lt;/p&gt;&#xA;$$&#xA;y[n] = f(x[n])&#xA;$$&lt;p&gt;With $f(x) = \tanh(x)$ you get soft saturation, with $f(x) = \text{clamp}(x, -1, 1)$ you get a hard clipper.&lt;/p&gt;&#xA;&lt;br&gt;&#xA;&lt;div data-waveshaper-time&gt;&lt;/div&gt;&#xA;&lt;script src=&#34;waveshaper-time.js&#34;&gt;&lt;/script&gt;&#xA;&lt;br&gt;&#xA;&lt;p&gt;The trouble is that a nonlinearity creates new partials. Push a sine at $f_0$ through $tanh$ and you get odd partials $(2k+1)f_0$ for $k = 1,2,3,...$. A hard clipper&amp;rsquo;s partials decay in a way that there is meaningful energy very far up.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Notes around SIDOsc (1)</title>
       <link>http://localhost:1313/blog/sidosc/</link>

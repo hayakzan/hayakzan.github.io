@@ -6,7 +6,8 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="theme-color" content="#000084" />
     <link rel="icon" href="{{ .Site.BaseURL }}/favicon.ico">
-    <link rel="canonical" href="{{ .Site.BaseURL }}">
-    {{/* Don't ask why it's like this. This original theme is a mess... */}}
-    <!-- <noscript><style>body { visibility: visible }</style></noscript> -->
+        <link rel="canonical" href="{{ .Site.BaseURL }}">
+            {{/* Don't ask why it's like this. This original theme is a mess... */}}
+            <!-- <noscript><style>body { visibility: visible }</style></noscript> -->
+            {{ if .Params.math }}{{ partial "math.html" . }}{{ end }}
 </head>
