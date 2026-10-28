@@ -7,7 +7,7 @@ preserveTaxonomyNames = false
 
 [params]
     # The name to display as main title in the home page
-    mainpagetitle = "YİĞİT KOLAT | COMPOSER"
+    mainpagetitle = "YİĞİT KOLAT"
 
     # The subtitle to display under the title in the home page
     mainpagesubtitle = "Welcome! Please use the menu above. The slow loading is not a bug, it's a feature." 
