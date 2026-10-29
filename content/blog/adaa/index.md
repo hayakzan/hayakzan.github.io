@@ -11,6 +11,10 @@ math = true
 
 <br>
 
+Inspired by Jatin Chowdhury's [Practical Considerations for Antiderivative Anti-Aliasing](https://jatinchowdhury18.medium.com/practical-considerations-for-antiderivative-anti-aliasing-d5847167f510), which I highly recommend. I'm writing this post mainly to concretize my understanding, and to chase a question that kept coming up: what changes when the waveshaper is a neural network?
+
+<br>
+
 ## The problem: distortion creates partials above Nyquist
 
 <br>

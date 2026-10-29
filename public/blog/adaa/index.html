@@ -91,6 +91,8 @@
     </div>
     <p class="lead">Why waveshapers alias, and how an integral fixes it</p>
     <br>
+<p>Inspired by Jatin Chowdhury&rsquo;s <a href="https://jatinchowdhury18.medium.com/practical-considerations-for-antiderivative-anti-aliasing-d5847167f510">Practical Considerations for Antiderivative Anti-Aliasing</a>, which I highly recommend. I&rsquo;m writing this post mainly to concretize my understanding, and to chase a question that kept coming up: what changes when the waveshaper is a neural network?</p>
+<br>
 <h2 id="the-problem-distortion-creates-partials-above-nyquist">The problem: distortion creates partials above Nyquist</h2>
 <br>
 <p>A <strong>waveshaper</strong> is the simplest nonlinear effect there is. Take each sample and push it through a function:</p>
