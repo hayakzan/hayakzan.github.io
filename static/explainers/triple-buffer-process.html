@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+</head>
+<body>
+<title>Triple Buffer Process</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: two windows. Left = code with the current line lit; right = what that line does, drawn as the three blocks front / middle / back. A slim slider row on top. */
+:root {
+  --bg: #f4f3f9;
+  --surface: #ffffff;
+  --code-bg: #f8f7fc;
+  --fg: #1c1a30;
+  --muted: #5d5a78;
+  --rule: #c9c6dc;
+  --audio: #4a3bb8;  --audio-soft: rgba(74, 59, 184, 0.13);
+  --mail: #2c7a6f;
+  --dec: #b9661c;    --dec-soft: rgba(185, 102, 28, 0.15);
+  --both-soft: rgba(44, 122, 111, 0.14);
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body: "Atkinson Hyperlegible", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14122a; --surface: #1d1a38; --code-bg: #18162f; --fg: #e7e5f6; --muted: #a3a0c2; --rule: #3a3660;
+    --audio: #9d90f2; --audio-soft: rgba(157, 144, 242, 0.18);
+    --mail: #63c7b6; --dec: #eda24f; --dec-soft: rgba(237, 162, 79, 0.18);
+    --both-soft: rgba(99, 199, 182, 0.16); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14122a; --surface: #1d1a38; --code-bg: #18162f; --fg: #e7e5f6; --muted: #a3a0c2; --rule: #3a3660;
+  --audio: #9d90f2; --audio-soft: rgba(157, 144, 242, 0.18);
+  --mail: #63c7b6; --dec: #eda24f; --dec-soft: rgba(237, 162, 79, 0.18);
+  --both-soft: rgba(99, 199, 182, 0.16); color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.5 var(--body); }
+.wrap {
+  max-width: 1180px; margin: 0 auto;
+  padding-block: 24px 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 16px;
+}
+.top { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+h1 { font: 700 26px/1.1 var(--display); margin: 0; margin-right: auto; }
+.nav { display: flex; gap: 10px; align-items: center; flex: 1 1 420px; }
+.nav input { flex: 1; accent-color: var(--fg); min-width: 0; }
+button {
+  font: 700 15px/1 var(--body); color: var(--fg); background: var(--surface);
+  border: 1px solid var(--rule); border-radius: 999px; padding: 9px 14px; cursor: pointer;
+}
+button:focus-visible, input:focus-visible { outline: 2px solid var(--dec); outline-offset: 2px; }
+.count { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3.6em; text-align: right; }
+
+.panes { display: grid; gap: 16px; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: stretch; }
+@media (max-width: 880px) { .panes { grid-template-columns: minmax(0, 1fr); } }
+.pane { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; min-width: 0; overflow: hidden; display: flex; flex-direction: column; }
+
+/* code window */
+.code { background: var(--code-bg); overflow-x: auto; padding: 10px 0; flex: 1; }
+.file { font: 700 12px/1.2 var(--body); color: var(--muted); padding: 12px 14px 4px; letter-spacing: 0.02em; }
+.file:first-child { padding-top: 4px; }
+.file i { font-style: normal; font-weight: 400; }
+.ln { display: grid; grid-template-columns: 3em 1fr; font: 14px/1.85 var(--mono); white-space: pre; border-left: 4px solid transparent; transition: background-color 200ms; }
+.ln .n { color: var(--muted); text-align: right; padding-right: 12px; }
+.ln .t { padding-right: 14px; }
+.ln.dim .t { color: var(--muted); }
+.ln.on-dec { background: var(--dec-soft); border-left-color: var(--dec); }
+.ln.on-audio { background: var(--audio-soft); border-left-color: var(--audio); }
+.ln.on-both { background: var(--both-soft); border-left-color: var(--mail); }
+
+/* picture window */
+.pic { padding: 18px; display: grid; gap: 18px; align-content: start; }
+.stage { position: relative; height: 230px; }
+.box {
+  position: absolute; top: 0; bottom: 0; width: calc((100% - 24px) / 3);
+  border: 2px solid var(--rule); border-radius: 12px; background: var(--surface);
+  display: grid; align-content: start; justify-items: center; padding-top: 10px;
+}
+.box:nth-child(1) { left: 0; border-color: var(--audio); }
+.box:nth-child(2) { left: calc((100% - 24px) / 3 + 12px); border-color: var(--mail); }
+.box:nth-child(3) { left: calc(2 * (100% - 24px) / 3 + 24px); border-color: var(--dec); }
+.box span { font: 700 15px/1.2 var(--mono); text-align: center; padding: 0 4px; }
+.box span small { font: 400 12px/1.3 var(--body); color: var(--muted); }
+.box:nth-child(1) span { color: var(--audio); }
+.box:nth-child(2) span { color: var(--mail); }
+.box:nth-child(3) span { color: var(--dec); }
+.card {
+  position: absolute; bottom: 30px;
+  width: calc((100% - 24px) / 3 - 24px); height: 130px;
+  border-radius: 10px; display: grid; place-items: center; color: #fff; text-align: center;
+  transition: left 650ms cubic-bezier(.5, 0, .2, 1), background-color 400ms, box-shadow 250ms;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+.card .inner { display: grid; gap: 4px; }
+.card b { font: 700 24px/1.1 var(--display); }
+.card small { font-size: 14px; }
+.card.empty { background: var(--rule); color: var(--muted); box-shadow: none; }
+.card.hl-dec { box-shadow: 0 0 0 4px var(--surface), 0 0 0 7px var(--dec); }
+.card.hl-audio { box-shadow: 0 0 0 4px var(--surface), 0 0 0 7px var(--audio); }
+.tag {
+  position: absolute; top: -10px; right: -8px; background: var(--fg); color: var(--bg);
+  font: 700 12px/1 var(--body); letter-spacing: 0.05em; padding: 5px 8px; border-radius: 999px;
+}
+.note {
+  position: absolute; bottom: 6px; left: 0; width: calc((100% - 24px) / 3);
+  text-align: center; font: 700 13px/1.2 var(--body);
+}
+.note.audio { color: var(--audio); }
+.note.mail { left: calc((100% - 24px) / 3 + 12px); color: var(--mail); }
+.note.dec { left: calc(2 * (100% - 24px) / 3 + 24px); color: var(--dec); }
+@media (prefers-reduced-motion: reduce) { .card { transition: none; } }
+
+.say { font: 600 19px/1.4 var(--display); min-height: 4.2em; text-wrap: pretty; }
+.say .who { display: block; font: 700 12px/1.2 var(--body); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; }
+.say .who.dec { color: var(--dec); } .say .who.audio { color: var(--audio); } .say .who.both { color: var(--mail); }
+</style>
+
+<div class="wrap">
+  <div class="top">
+    <h1>Triple Buffer Process</h1>
+    <div class="nav">
+      <button type="button" id="prev" aria-label="Previous step">←</button>
+      <input type="range" id="slider" min="0" value="0" aria-label="Step">
+      <button type="button" id="next" aria-label="Next step">→</button>
+      <span class="count" id="count"></span>
+    </div>
+  </div>
+
+  <div class="panes">
+    <div class="pane">
+      <div class="code" id="code"></div>
+    </div>
+
+    <div class="pane">
+      <div class="pic">
+        <div class="stage" id="stage" aria-hidden="true">
+          <div class="box"><span>front<br><small>audio thread plays</small></span></div>
+          <div class="box"><span>middle<br><small>latest finished table</small></span></div>
+          <div class="box"><span>back<br><small>decoder thread writes</small></span></div>
+          <div class="card" id="cA"><span class="tag" hidden>dirty</span><div class="inner"><b>A</b><small></small></div></div>
+          <div class="card" id="cB"><span class="tag" hidden>dirty</span><div class="inner"><b>B</b><small></small></div></div>
+          <div class="card" id="cC"><span class="tag" hidden>dirty</span><div class="inner"><b>C</b><small></small></div></div>
+          <span class="note audio" id="nAudio"></span>
+          <span class="note mail" id="nMail"></span>
+          <span class="note dec" id="nDec"></span>
+        </div>
+        <p class="say" id="say" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const el = id => document.getElementById(id);
+
+  // The code window: real lines and line numbers from the repo; "…" stands for the memory-order argument.
+  const CODE = [
+    ["file", "TripleBuffer.h", "prepare()"],
+    [21, "front = 0;", "t21"],
+    [22, "middle.store (1);", "t22"],
+    [23, "back = 2;", "t23"],
+    ["file", "PluginProcessor.cpp", "decoder thread"],
+    [109, "float* dst = proc.tables.writeBuffer();", "p109"],
+    [110, "buildTable (s, dst);", "p110"],
+    [115, "proc.tables.publish();", "p115"],
+    ["file", "TripleBuffer.h", "publish()"],
+    [33, "back = middle.exchange (back | kDirty, …) & kIndexMask;", "t33"],
+    ["file", "TripleBuffer.h", "acquire()"],
+    [40, "if ((middle.load (…) & kDirty) == 0)", "t40"],
+    [41, "    return false;", "t41"],
+    [42, "front = middle.exchange (front, …) & kIndexMask;", "t42"],
+    [43, "return true;", "t43"],
+    ["file", "PluginProcessor.cpp", "processBlock() · audio thread"],
+    [375, "if (tables.acquire())", "p375"],
+    [376, "    osc.setTargetTable (tables.readBuffer());", "p376"]
+  ];
+  const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  el("code").innerHTML = CODE.map(r => r[0] === "file"
+    ? `<div class="file">${r[1]} <i>· ${r[2]}</i></div>`
+    : `<div class="ln" data-id="${r[2]}"><span class="n">${r[0]}</span><span class="t">${esc(r[1])}</span></div>`).join("");
+
+  // Scenes. pos: 0 front, 1 middle, 2 back. t: table in each block (0 = empty).
+  // hl: block outlined in the acting thread's colour. notes: small labels under the boxes.
+  const S = [
+    { lines: ["t21", "t22", "t23"], who: "both",
+      pos: { A: 0, B: 1, C: 2 }, t: { A: 0, B: 0, C: 0 },
+      say: "Setup: block A goes to front, B to middle, C to back." },
+    { lines: ["p109"], who: "dec", hl: "C",
+      pos: { A: 0, B: 1, C: 2 }, t: { A: 0, B: 0, C: 0 },
+      say: "The decoder picks up its own block, C. Nobody else touches it." },
+    { lines: ["p110"], who: "dec", hl: "C",
+      pos: { A: 0, B: 1, C: 2 }, t: { A: 0, B: 0, C: 1 },
+      say: "It runs the model and writes table 1 into C. This is the slow part." },
+    { lines: ["p115", "t33"], who: "dec", isNew: true,
+      pos: { A: 0, B: 2, C: 1 }, t: { A: 0, B: 0, C: 1 },
+      say: "publish(): one atomic swap. C goes to middle, marked dirty, and the decoder takes back B." },
+    { lines: ["p375", "t40"], who: "audio", hl: "C", isNew: true, notes: { mail: "dirty? yes" },
+      pos: { A: 0, B: 2, C: 1 }, t: { A: 0, B: 0, C: 1 },
+      say: "The next processBlock() call starts. acquire() checks middle: is it dirty, i.e. is a new table waiting? Yes." },
+    { lines: ["t42", "t43"], who: "audio",
+      pos: { A: 1, B: 2, C: 0 }, t: { A: 0, B: 0, C: 1 },
+      say: "One atomic swap: the audio thread puts A in middle and takes C as its front." },
+    { lines: ["p376"], who: "audio", hl: "C", notes: { audio: "♪ playing table 1" },
+      pos: { A: 1, B: 2, C: 0 }, t: { A: 0, B: 0, C: 1 },
+      say: "It plays table 1, looping that one cycle over and over." },
+    { lines: ["p375", "t40", "t41"], who: "audio", notes: { audio: "♪ still table 1", mail: "dirty? no" },
+      pos: { A: 1, B: 2, C: 0 }, t: { A: 0, B: 0, C: 1 },
+      say: "Next processBlock() call: is middle dirty? No. acquire() returns false and it keeps looping table 1." },
+    { lines: ["p109", "p110"], who: "dec", hl: "B", notes: { audio: "♪ playing table 1" },
+      pos: { A: 1, B: 2, C: 0 }, t: { A: 0, B: 2, C: 1 },
+      say: "Meanwhile the decoder writes table 2 into its block, B." },
+    { lines: ["p115", "t33"], who: "dec", isNew: true, notes: { audio: "♪ playing table 1" },
+      pos: { A: 2, B: 1, C: 0 }, t: { A: 0, B: 2, C: 1 },
+      say: "publish(): B goes to middle, marked dirty; the decoder takes back A." },
+    { lines: ["p109", "p110"], who: "dec", hl: "A", isNew: true, notes: { audio: "♪ playing table 1" },
+      pos: { A: 2, B: 1, C: 0 }, t: { A: 3, B: 2, C: 1 },
+      say: "The decoder is fast: before the audio thread checks again, it writes table 3 into A." },
+    { lines: ["p115", "t33"], who: "dec", isNew: true, notes: { audio: "♪ playing table 1", dec: "table 2: skipped" },
+      pos: { A: 1, B: 2, C: 0 }, t: { A: 3, B: 2, C: 1 },
+      say: "publish() again: A replaces B in middle. Table 2 is never played, which is fine: only the newest sound matters." },
+    { lines: ["p375", "t40", "t42", "t43"], who: "audio",
+      pos: { A: 0, B: 2, C: 1 }, t: { A: 3, B: 2, C: 1 },
+      say: "Next processBlock() call: dirty? Yes. One swap: C goes to middle, the audio thread takes A." },
+    { lines: ["p376"], who: "audio", hl: "A", notes: { audio: "♪ playing table 3" },
+      pos: { A: 0, B: 2, C: 1 }, t: { A: 3, B: 2, C: 1 },
+      say: "It plays table 3. Every handoff was one atomic swap: no copying, no waiting." }
+  ];
+
+  const COLORS = { 1: "hsl(330 55% 48%)", 2: "hsl(205 65% 42%)", 3: "hsl(90 40% 36%)" };
+  const LEFT = ["12px", "calc((100% - 24px) / 3 + 24px)", "calc(2 * (100% - 24px) / 3 + 36px)"];
+  const WHO = { dec: "Decoder thread", audio: "Audio thread", both: "Before either thread starts" };
+  const slider = el("slider");
+  slider.max = S.length - 1;
+
+  function show(i) {
+    const s = S[i];
+    document.querySelectorAll(".ln").forEach(n => {
+      n.classList.remove("on-dec", "on-audio", "on-both");
+      if (s.lines.includes(n.dataset.id)) n.classList.add("on-" + s.who);
+    });
+    for (const k of ["A", "B", "C"]) {
+      const c = el("c" + k), t = s.t[k];
+      c.style.left = LEFT[s.pos[k]];
+      c.classList.toggle("empty", t === 0);
+      c.style.backgroundColor = t ? COLORS[t] : "";
+      c.querySelector("small").textContent = t ? `table ${t}` : "empty";
+      c.querySelector(".tag").hidden = !(s.isNew && s.pos[k] === 1);
+      c.classList.remove("hl-dec", "hl-audio");
+      if (s.hl === k) c.classList.add("hl-" + s.who);
+    }
+    const n = s.notes || {};
+    el("nAudio").textContent = n.audio || "";
+    el("nMail").textContent = n.mail || "";
+    el("nDec").textContent = n.dec || "";
+    el("say").innerHTML = `<span class="who ${s.who}">${WHO[s.who]}</span>${s.say}`;
+    el("count").textContent = `${i + 1} / ${S.length}`;
+    slider.value = i;
+  }
+  let cur = 0;
+  const go = i => { cur = Math.max(0, Math.min(S.length - 1, i)); show(cur); };
+  slider.addEventListener("input", () => go(+slider.value));
+  el("prev").addEventListener("click", () => go(cur - 1));
+  el("next").addEventListener("click", () => go(cur + 1));
+  document.addEventListener("keydown", e => {
+    if (e.target === slider) return;
+    if (e.key === "ArrowRight") go(cur + 1);
+    if (e.key === "ArrowLeft") go(cur - 1);
+  });
+  go(0);
+})();
+</script>
+
+</body>
+</html>
