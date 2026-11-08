@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <title>Yiğit Kolat</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="theme-color" content="#000084" />
+    <link rel="icon" href="http://localhost:1313//favicon.ico">
+        <link rel="canonical" href="http://localhost:1313/">
+            
+            
+            
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"></button>
+            <a class="brand" href="http://localhost:1313/">Yiğit Kolat</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    
+                    
+                        
+                            <li>
+                                <a href="/about/">
+                                    
+                                    <span>About</span>
+                                </a>
+                            </li>
+                        
+                    
+                        
+                            <li>
+                                <a href="/works/">
+                                    
+                                    <span>Works</span>
+                                </a>
+                            </li>
+                        
+                    
+                        
+                            <li>
+                                <a href="/research/">
+                                    
+                                    <span>Research</span>
+                                </a>
+                            </li>
+                        
+                    
+                        
+                            <li>
+                                <a href="/blog/">
+                                    
+                                    <span>Blog</span>
+                                </a>
+                            </li>
+                        
+                    
+                        
+                            <li>
+                                <a href="/contact/">
+                                    
+                                    <span>Contact</span>
+                                </a>
+                            </li>
+                        
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav><div id="content" class="container">
+
+<div class="row-fluid navmargin">
+    <div class="page-header">
+        <h1>The Pitch of Noise: Inside the SID&#39;s Noise Generator</h1>
+    </div>
+    <p class="lead">Why the Commodore 64&#39;s noise has a pitch, and what that means for modelling it.</p>
+    <br>
+<p>Turn a C64&rsquo;s oscillator to noise and play up the keyboard, and something odd happens: the noise has a pitch. Low notes give a grainy rumble, high notes a bright hiss, and the steps in between are clearly <em>higher</em> and <em>lower</em>. That shouldn&rsquo;t be possible if noise were just noise. This post is about why it is.</p>
+<br>
+<p>I ran into the question while working on <a href="https://github.com/hayakzan/SIDVAE">SIDVae</a>, a plugin that morphs between SID waveforms with a neural network. The model learns single wavetable cycles, and noise doesn&rsquo;t have a cycle, so it was left out. But noise is one of the SID&rsquo;s defining sounds: drums, snares, wind and explosions in C64 music are built on it. Leaving it out means understanding it first.</p>
+<br>
+<h2 id="not-a-random-number-per-sample">Not a random number per sample</h2>
+<br>
+<p>A software noise generator usually produces a new random value for every sample. The SID doesn&rsquo;t. Its noise comes from a <strong>23-bit shift register</strong>, and the register only advances at specific moments.</p>
+<p>Each SID oscillator has a 24-bit <strong>phase accumulator</strong>: a counter that adds the voice&rsquo;s frequency value roughly a million times per second and wraps around at 2²⁴. The tone waveforms are read from this counter; a sawtooth is literally its top bits. The noise generator listens to the same counter: in reSID&rsquo;s words, the register &ldquo;is clocked by bit 19 of the accumulator&rdquo;, shifting &ldquo;once for each time accumulator bit 19 is set high&rdquo;.</p>
+<p>Bit 19 goes high 2²⁴ / 2²⁰ = <strong>16 times per oscillator cycle</strong>. So at a note of 220 Hz, the shift register steps about 3,520 times per second. Play an octave higher and it steps twice as fast.</p>
+<p>Each step works like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">// one step of the SID noise register (after reSID)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>bit0  <span style="color:#f92672">=</span> ((reg <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">22</span>) <span style="color:#f92672">^</span> (reg <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">17</span>)) <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">1</span>;   <span style="color:#75715e">// feedback: bit 22 XOR bit 17
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>reg   <span style="color:#f92672">=</span> ((reg <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">|</span> bit0) <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0x7fffff</span>;     <span style="color:#75715e">// shift left, keep 23 bits
+</span></span></span></code></pre></div><p>The output isn&rsquo;t the whole register. Eight of its bits (20, 18, 14, 11, 9, 5, 2 and 0) are wired to the top eight bits of the 12-bit waveform output, and the lower four are grounded. Between steps, that output simply <strong>holds</strong> its value.</p>
+<br>
+<div data-sid-noise-clock></div>
+<script src="sid-noise-clock.js"></script>
+<br>
+<h2 id="a-staircase-on-a-regular-grid">A staircase on a regular grid</h2>
+<br>
+<p>Put together, SID noise is a staircase: random heights, but on a <strong>perfectly regular timing grid</strong>.</p>
+<pre tabindex="0"><code>value:   random   random   random   random   ...
+timing:  |───────|───────|───────|───────|       &lt;- set by the frequency register
+</code></pre><p>That combination is the whole story. The values are random, so there&rsquo;s no repeating waveform. But the timing is periodic, and the ear notices.</p>
+<p>A signal that holds random values for a fixed time has its energy concentrated <strong>below the step rate</strong>, falling off with dips at multiples of it. Double the step rate and the entire curve moves up an octave. What we hear as the noise&rsquo;s &ldquo;pitch&rdquo; is that curve sliding up and down: a color, more like the pitch of wind than of a held note. At low notes the steps are slow enough to hear individually, which is where the grit comes from: the same grid, heard as texture rather than color.</p>
+<br>
+<div data-sid-noise-register></div>
+<script src="sid-noise-register.js"></script>
+<br>
+<h2 id="how-long-until-it-repeats">How long until it repeats?</h2>
+<br>
+<p>A 23-bit register with this feedback cycles through 2²³ − 1 = 8,388,607 states before repeating. At 3,520 steps per second (our 220 Hz note), that&rsquo;s about <strong>40 minutes</strong> before the pattern comes round again. Strictly speaking SID noise <em>is</em> periodic; just not on any timescale music cares about.</p>
+<br>
+<h2 id="what-noise-does-to-the-other-waveforms">What noise does to the other waveforms</h2>
+<br>
+<p>The SID lets you select several waveforms on one voice at once, and their outputs get combined bit by bit. With noise in the mix, that goes badly for the noise: reSID notes that &ldquo;all waveform combinations including noise output zero after a few cycles&rdquo;, because the combined bits are written back into the shift register, and &ldquo;a bit once set to zero cannot be changed&rdquo;. The register fills with zeros and the voice goes silent until it&rsquo;s reset. The chip offers no in-between state of tone and noise.</p>
+<br>
+<h2 id="why-this-matters-for-sidvae">Why this matters for SIDVae</h2>
+<br>
+<p>This changes how I want to model noise:</p>
+<ul>
+<li><strong>It can&rsquo;t be a wavetable.</strong> There&rsquo;s no cycle to learn, and averaging random staircases gives you nothing.</li>
+<li><strong>It can be a spectral shape.</strong> What stays stable from one recording to the next is the colour: how much energy sits in each frequency band. That curve is a smooth function of pitch, which is exactly what a network learns well.</li>
+<li><strong>The pitch is shared.</strong> The noise grid is clocked by the same accumulator as the tone, so in a morph from triangle to noise the pitch reference doesn&rsquo;t move. What changes is the material: a signal periodic in both timing and value gradually losing the periodicity of its values while keeping its timing.</li>
+</ul>
+<p>That last point is the one I find most interesting musically. A crossfade from a triangle to noise just turns one down and the other up. A morph should travel through a space where the waveform&rsquo;s values come loose from their cycle while the clock underneath keeps time. That&rsquo;s what I&rsquo;ll try to build next.</p>
+<p>One thing I still want to check: if the theory holds, the spectrum of a 220 Hz noise recording should dip near 3,520 Hz and 7,040 Hz, with the dips following the note. The renders for the next SIDVae dataset will tell.</p>
+<br>
+<p><em>Source: <a href="https://fossies.org/linux/vice/src/resid/wave.h">reSID <code>wave.h</code></a>, as included in VICE.</em></p>
+
+    <h4><a href="http://localhost:1313/">Back to Home</a></h4>
+</div>
+
+
+        </div><footer class="container">
+    <hr class="soften">
+    <p>
+&copy; 
+
+    Yiğit Kolat
+
+<span id="thisyear">2026</span>
+
+
+</p>
+    <p class="text-center">
+        
+        
+        
+        <a href="https://www.youtube.com/channel/UCGrkqx-0aSupn8eHfroxthg">YouTube</a> 
+        <a href="https://soundcloud.com/ykolat">SoundCloud</a>
+    </p>
+</footer>
+
+</body><link rel="stylesheet" href="/css/bootstrap.css">
+<link rel="stylesheet" href="/css/bootstrap-responsive.css">
+<link rel="stylesheet" href="/css/style.css">
+
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap-386.js"></script>
+<script src="/js/bootstrap-transition.js"></script>
+<script src="/js/bootstrap-alert.js"></script>
+<script src="/js/bootstrap-modal.js"></script>
+<script src="/js/bootstrap-dropdown.js"></script>
+<script src="/js/bootstrap-scrollspy.js"></script>
+<script src="/js/bootstrap-tab.js"></script>
+<script src="/js/bootstrap-tooltip.js"></script>
+<script src="/js/bootstrap-popover.js"></script>
+<script src="/js/bootstrap-button.js"></script>
+<script src="/js/bootstrap-collapse.js"></script>
+<script src="/js/bootstrap-carousel.js"></script>
+<script src="/js/bootstrap-typeahead.js"></script>
+<script src="/js/bootstrap-affix.js"></script>
+<script>
+    _386 = { 
+        fastLoad: false ,
+        onePass: false , 
+        speedFactor: 1 
+    };
+
+    
+    function ThisYear() {
+        document.getElementById('thisyear').innerHTML = new Date().getFullYear();
+    };
+</script>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <title>Yiğit Kolat</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="theme-color" content="#000084" />
+    <link rel="icon" href="http://localhost:1313//favicon.ico">
+        <link rel="canonical" href="http://localhost:1313/">
+            
+            
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {
+    delimiters: [
+      {left: '$$', right: '$$', display: true},
+      {left: '\\[', right: '\\]', display: true},
+      {left: '$', right: '$', display: false},
+      {left: '\\(', right: '\\)', display: false}
+    ],
+    throwOnError: false
+  });"></script>
+
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"></button>
+            <a class="brand" href="http://localhost:1313/">Yiğit Kolat</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    
+                    
+                        
+                            <li>
+                                <a href="/about/">
+                                    
+                                    <span>About</span>
+                                </a>
+                            </li>
+                        
+                    
+                        
+                            <li>
+                                <a href="/works/">
+                                    
+                                    <span>Works</span>
+                                </a>
+                            </li>
+                        
+                    
+                        
+                            <li>
+                                <a href="/research/">
+                                    
+                                    <span>Research</span>
+                                </a>
+                            </li>
+                        
+                    
+                        
+                            <li>
+                                <a href="/blog/">
+                                    
+                                    <span>Blog</span>
+                                </a>
+                            </li>
+                        
+                    
+                        
+                            <li>
+                                <a href="/contact/">
+                                    
+                                    <span>Contact</span>
+                                </a>
+                            </li>
+                        
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav><div id="content" class="container">
+
+<div class="row-fluid navmargin">
+    <div class="page-header">
+        <h1>Notes around SIDOsc (0)</h1>
+    </div>
+    <p class="lead">The phase accumulator: the counter at the heart of every SID voice</p>
+    <br>
+<h2 id="dramatis-personae">DRAMATIS PERSONAE</h2>
+<br>
+<ul>
+<li><code>The SID.</code> The Commodore 64&rsquo;s sound chip, the MOS Technology 6581 (later revised as the 8580). SID stands for Sound Interface Device. It was designed by Bob Yannes and has three independent voices, each with its own accumulator, frequency register and waveforms. Everything below happens inside one voice.</li>
+<li><code>reSID.</code> A cycle-accurate software emulation of the SID, written in C++ by Dag Lem and used by emulators such as VICE. The code excerpts in this post come from reSID.</li>
+<li><code>SIDOsc.</code> My SuperCollider UGen built on reSID (<a href="https://github.com/hayakzan/SIDOsc">github</a>). It puts a SID voice inside SuperCollider, so its accumulator, frequency and waveforms can be controlled live and combined with other UGens.</li>
+<li><code>The system clock.</code> The Commodore 64&rsquo;s heartbeat, ticking about a million times a second (985,248 on a PAL machine, 1,022,727 on NTSC). Every <strong>tick</strong> below is one of these.</li>
+<li><code>The phase accumulator.</code> A 24-bit counter, one per voice. It holds a value from 0 to 16,777,215, and when it goes past the top, it wraps around. This is the dial in the first widget below.</li>
+<li><code>The frequency register.</code> A 16-bit number (0 to 65,535) that the program writes for each voice. It&rsquo;s the <strong>step size</strong>: on every tick, the SID adds it to the accumulator. It&rsquo;s the main thing a C64 musician changes to set the pitch.</li>
+<li><code>The waveforms.</code> Sawtooth, triangle, pulse and noise. All four are read from the accumulator&rsquo;s upper bits, so there&rsquo;s no separate oscillator for each.</li>
+<li><code>The pulse width register.</code> A 12-bit threshold that only the pulse waveform uses. More details is in <a href="../sidosc/">part 1</a></li>
+<li><code>PAL and NTSC.</code> The two TV standards of the era. The C64 was built in two versions to match them: PAL for Europe and Australia, NTSC for North America and Japan.</li>
+</ul>
+<br>
+<h2 id="accumulating-the-phases">Accumulating the phases</h2>
+<br>
+<p>Every sound a SID voice makes comes out of one counter called the <strong>phase accumulator</strong>. Its pitch, all four of its waveforms, and even the tricks voices play on each other stem from this.</p>
+<p>Let&rsquo;s say we have a dial numbered 0 to 63. On every tick, the hand jumps forward by a fixed amount, the <strong>step</strong>. When it passes 63, it wraps back around past 0 and keeps going. Each trip around the dial is one cycle of the waveform.</p>
+<div data-accumulator-step></div>
+<script src="accumulator-step.js"></script>
+<br>
+<p>Try a step of 4. The hand needs 16 ticks to get around, so one cycle is 16 ticks long. A step of 8 gets around in 8 ticks, twice as fast, an octave higher. A bigger step means the counter wraps sooner, and wrapping sooner means a higher pitch.</p>
+<p>On the SID, the step lives in the <code>frequency register</code>: a 16-bit slot (0–65,535) that the program writes as two bytes. The program never sets a pitch directly. It sets how far the counter moves on each tick, and the pitch follows.</p>
+<p>Note that the timbre is rougher than a smooth sawtooth. That&rsquo;s because the toy counter has only 64 values (6 bits) and changes only 3,520 times a second. The SID&rsquo;s sawtooth has 4,096 levels (the upper 12 bits of its 24-bit counter, more on this later) and updates about a million times a second.</p>
+<p>The real counter counts from 0 up to 16,777,215 before it wraps. On every tick of the system clock, the SID adds the frequency register to it. From the reSID source:</p>
+<pre><code>accumulator += freq;
+accumulator &amp;= 0xffffff;
+</code></pre>
+<br>
+<p>Why the AND operation? On the chip, the counter is exactly 24 bits wide, so the carry out of the top bit simply falls off and the count wraps by itself. reSID, though, runs on an ordinary computer, where the accumulator lives in a 32-bit variable that would happily keep counting past 16,777,215. The second line, the mask, makes the software behave like the hardware: 0xffffff is 24 ones in binary, and &amp; keeps only those bits.</p>
+<img src="accumulator-wrap.svg" alt="With the mask the accumulator wraps at 16,777,215 and forms a sawtooth; without it the count keeps rising" style="filter:none; display:block; max-width:760px; width:100%; margin:1.5em auto;">
+<p>to be continued&hellip;</p>
+
+    <h4><a href="http://localhost:1313/">Back to Home</a></h4>
+</div>
+
+
+        </div><footer class="container">
+    <hr class="soften">
+    <p>
+&copy; 
+
+    Yiğit Kolat
+
+<span id="thisyear">2026</span>
+
+
+</p>
+    <p class="text-center">
+        
+        
+        
+        <a href="https://www.youtube.com/channel/UCGrkqx-0aSupn8eHfroxthg">YouTube</a> 
+        <a href="https://soundcloud.com/ykolat">SoundCloud</a>
+    </p>
+</footer>
+
+</body><link rel="stylesheet" href="/css/bootstrap.css">
+<link rel="stylesheet" href="/css/bootstrap-responsive.css">
+<link rel="stylesheet" href="/css/style.css">
+
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap-386.js"></script>
+<script src="/js/bootstrap-transition.js"></script>
+<script src="/js/bootstrap-alert.js"></script>
+<script src="/js/bootstrap-modal.js"></script>
+<script src="/js/bootstrap-dropdown.js"></script>
+<script src="/js/bootstrap-scrollspy.js"></script>
+<script src="/js/bootstrap-tab.js"></script>
+<script src="/js/bootstrap-tooltip.js"></script>
+<script src="/js/bootstrap-popover.js"></script>
+<script src="/js/bootstrap-button.js"></script>
+<script src="/js/bootstrap-collapse.js"></script>
+<script src="/js/bootstrap-carousel.js"></script>
+<script src="/js/bootstrap-typeahead.js"></script>
+<script src="/js/bootstrap-affix.js"></script>
+<script>
+    _386 = { 
+        fastLoad: false ,
+        onePass: false , 
+        speedFactor: 1 
+    };
+
+    
+    function ThisYear() {
+        document.getElementById('thisyear').innerHTML = new Date().getFullYear();
+    };
+</script>
+</html>

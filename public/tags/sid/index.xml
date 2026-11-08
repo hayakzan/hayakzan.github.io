@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SID on Yiğit Kolat</title>
+    <link>http://localhost:1313/tags/sid/</link>
+    <description>Recent content in SID on Yiğit Kolat</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 30 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/sid/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Pitch of Noise: Inside the SID&#39;s Noise Generator</title>
+      <link>http://localhost:1313/blog/sidnoise/</link>
+      <pubDate>Fri, 30 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/sidnoise/</guid>
+      <description>&lt;br&gt;&#xA;&lt;p&gt;Turn a C64&amp;rsquo;s oscillator to noise and play up the keyboard, and something odd happens: the noise has a pitch. Low notes give a grainy rumble, high notes a bright hiss, and the steps in between are clearly &lt;em&gt;higher&lt;/em&gt; and &lt;em&gt;lower&lt;/em&gt;. That shouldn&amp;rsquo;t be possible if noise were just noise. This post is about why it is.&lt;/p&gt;&#xA;&lt;br&gt;&#xA;&lt;p&gt;I ran into the question while working on &lt;a href=&#34;https://github.com/hayakzan/SIDVAE&#34;&gt;SIDVae&lt;/a&gt;, a plugin that morphs between SID waveforms with a neural network. The model learns single wavetable cycles, and noise doesn&amp;rsquo;t have a cycle, so it was left out. But noise is one of the SID&amp;rsquo;s defining sounds: drums, snares, wind and explosions in C64 music are built on it. Leaving it out means understanding it first.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

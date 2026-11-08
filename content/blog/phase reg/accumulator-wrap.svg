@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 430" width="800" height="430" font-family="Menlo, Consolas, 'Courier New', monospace">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#ff9955"/></marker><marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#a0a0d0"/></marker></defs>
+<rect width="800" height="430" fill="#000080"/>
+<rect x="120" y="40" width="650" height="123.75" fill="#2a2a7a" opacity="0.6"/>
+<text x="762" y="160" fill="#7a7ab8" font-size="12" text-anchor="end">bits 24–31: only in a 32-bit variable, not on the chip</text>
+<text x="762" y="360" fill="#55ffff" font-size="12" text-anchor="end" opacity="0.8">the chip's 24 bits</text>
+<line x1="120" y1="370.0" x2="770" y2="370.0" stroke="#5555aa" stroke-width="1"/>
+<text x="112" y="374.0" fill="#c0c0c0" font-size="12" text-anchor="end">0</text>
+<line x1="120" y1="163.75" x2="770" y2="163.75" stroke="#c0c0c0" stroke-width="1.5"/>
+<text x="112" y="167.75" fill="#c0c0c0" font-size="12" text-anchor="end">16,777,215</text>
+<text x="112" y="183.75" fill="#a0a0d0" font-size="10.5" text-anchor="end">(top of 24 bits)</text>
+<text x="120" y="394" fill="#a0a0d0" font-size="12">ticks →</text>
+<line x1="120.0" y1="370.0" x2="466.6666666666667" y2="42.0" stroke="#a0a0d0" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arw)"/>
+<text x="476.6666666666667" y="58" fill="#a0a0d0" font-size="13">without the mask:</text>
+<text x="476.6666666666667" y="76" fill="#a0a0d0" font-size="13">keeps counting, never wraps</text>
+<line x1="120.0" y1="370.0" x2="336.66666666666663" y2="163.75" stroke="#55ffff" stroke-width="3" stroke-linecap="round"/>
+<line x1="336.66666666666663" y1="370.0" x2="553.3333333333333" y2="163.75" stroke="#55ffff" stroke-width="3" stroke-linecap="round"/>
+<line x1="553.3333333333333" y1="370.0" x2="770.0" y2="163.75" stroke="#55ffff" stroke-width="3" stroke-linecap="round"/>
+<line x1="336.66666666666663" y1="167.75" x2="336.66666666666663" y2="364.0" stroke="#ff9955" stroke-width="2" marker-end="url(#ar)"/>
+<line x1="553.3333333333333" y1="167.75" x2="553.3333333333333" y2="364.0" stroke="#ff9955" stroke-width="2" marker-end="url(#ar)"/>
+<line x1="770.0" y1="167.75" x2="770.0" y2="364.0" stroke="#ff9955" stroke-width="2" marker-end="url(#ar)"/>
+<text x="326.7" y="283.4" fill="#ff9955" font-size="12" text-anchor="end">&amp; 0xFFFFFF</text>
+<text x="326.7" y="299.4" fill="#ff9955" font-size="12" text-anchor="end">drops the carry:</text>
+<text x="326.7" y="315.4" fill="#ff9955" font-size="12" text-anchor="end">back to near 0</text>
+<text x="661.6666666666667" y="394" fill="#55ffff" font-size="13" text-anchor="middle">with the mask: a sawtooth</text>
+<path d="M120.0,404 v6 H336.66666666666663 v-6" fill="none" stroke="#c0c0c0" stroke-width="1.2"/>
+<text x="228.33333333333331" y="424" fill="#c0c0c0" font-size="12" text-anchor="middle">one cycle</text>
+<g font-size="12">
+<rect x="128" y="52" width="214" height="84" rx="6" fill="#000080" stroke="#ff9955" stroke-width="1.2"/>
+<text x="138" y="72" fill="#ffffff" xml:space="preserve">  0x<tspan fill="#ff9955" font-weight="bold" font-size="14">1</tspan>00149D  16,782,493</text>
+<text x="138" y="94" fill="#55ffff" xml:space="preserve">&amp; 0x0FFFFFF  (24 1s)</text>
+<text x="138" y="116" fill="#ffffff" xml:space="preserve">= 0x<tspan fill="#ff9955" font-weight="bold" font-size="14">0</tspan>00149D       5,277</text>
+<line x1="138" y1="101" x2="332" y2="101" stroke="#a0a0d0" stroke-width="0.8"/>
+</g>
+<line x1="342" y1="136" x2="336.7" y2="168" stroke="#ff9955" stroke-width="1" stroke-dasharray="3 3"/>
+</svg>
