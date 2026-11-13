@@ -17,6 +17,11 @@ author = ""
             <div class="overlay-text">EVAL</div>
             <a href="/research/eval-res/"><img src="eval.png" alt="eval" width="300" height="300"></a>
         </td>
+        <td width="20"></td> <!-- Spacer cell -->
+        <td>
+            <div class="overlay-text">La quatrième mélodie</div>
+            <a href="/research/quatrieme-res/"><img src="la_quatrieme_melodie.png" alt="quatrième" width="300" height="300"></a>
+        </td>
         <td width="20"></td> <!-- Spacer cell -->        
     </tr>
     <tr style="height: 40px;"></tr> <!-- Spacer row -->

@@ -11,21 +11,6 @@
     <loc>http://localhost:1313/blog/phase-reg/</loc>
     <lastmod>2026-11-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/c64/</loc>
-    <lastmod>2026-10-30T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/dsp/</loc>
-    <lastmod>2026-10-30T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/sid/</loc>
-    <lastmod>2026-10-30T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2026-10-30T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/blog/sidnoise/</loc>
-    <lastmod>2026-10-30T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/blog/adaa/</loc>
     <lastmod>2026-10-26T00:00:00+00:00</lastmod>
   </url><url>
@@ -73,9 +58,13 @@
   </url><url>
     <loc>http://localhost:1313/research/eval-res/</loc>
   </url><url>
+    <loc>http://localhost:1313/research/quatrieme-res/</loc>
+  </url><url>
     <loc>http://localhost:1313/research/</loc>
   </url><url>
     <loc>http://localhost:1313/research/spomenik-res/</loc>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
   </url><url>
     <loc>http://localhost:1313/works/</loc>
   </url>
